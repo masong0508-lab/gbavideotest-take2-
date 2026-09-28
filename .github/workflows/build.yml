@@ -1,0 +1,23 @@
+name: Build GBA ROM
+
+on:
+  push:
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    container:
+      image: devkitpro/devkitarm:latest
+    steps:
+      - name: Check out repo
+        uses: actions/checkout@v4
+
+      - name: Build ROM
+        run: make
+
+      - name: Upload .gba artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: sonic_gba_preview
+          path: '*.gba'
